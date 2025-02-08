@@ -87,7 +87,7 @@ Clustering the assemblies was straight-forward using Trycycler.
    trycycler cluster --threads 48 --assemblies assemblies/*.fasta --reads KP9_sup_filtrat.fastq --out_dir cluster
    ```
 <br>
-I then looked at [FigTree](http://tree.bio.ed.ac.uk/software/figtree/) to identify out of place contigs. The clustering was succesful - 4 clearly defined clusters - a chromosome of ~5.3Mb and 3 smaller contigs of ~153Kb, ~56Kb and ~4Kb respectively, which were probably plasmids. I ended up removing the D contig in the 3rd cluster since its size was very different to the other ones.
+I then looked at [FigTree](https://evomics.org/resources/software/molecular-evolution-software/figtree/) to identify out of place contigs. The clustering was succesful - 4 clearly defined clusters - a chromosome of ~5.3Mb and 3 smaller contigs of ~153Kb, ~56Kb and ~4Kb respectively, which were probably plasmids. I ended up removing the D contig in the 3rd cluster since its size was very different to the other ones.
 <br>
 ![FigTree](assets/images/figtree.png){: w="300" .center }
 
