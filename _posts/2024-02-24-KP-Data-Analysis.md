@@ -32,14 +32,14 @@ I've started a sequencing run from an atypical *Klebsiella pneumoniae* isolate t
 
 I wanted to test RRWick's new tool - [Trycycler](https://github.com/rrwick/Trycycler). It's designed to generate high-quality consensus assemblies from long-read sequencing data. Unlike traditional assemblers that rely on a single method, Trycycler takes a hybrid approach by combining multiple assemblies of the same dataset, leveraging their strengths to produce a more accurate and contiguous final assembly. It seemed like the perfect moment to test this method so I had to give it a go.
 
-![Trycycler workflow](assets/images/trycyclerworkflow.png)
+![Trycycler workflow](assets/img/trycyclerworkflow.png)
 _Trycycler workflow. Credits: Trycycler Github_
 
 1. Running **EPI2ME's WIMP**:
 <br>
 Just to make sure our reads are *K. pneumoniae*.
 <br>
-![WIMP](assets/images/WIMPKP.png){: w="300" .center }
+![WIMP](assets/img/WIMPKP.png){: w="300" .center }
 
 2. **QC and filtering** using Filtlong: <br>
 QC scores were good, we kept fragments longer than 1Kb to help with the assembly.
@@ -80,7 +80,7 @@ This step creates the assemblies.We used Flye, Miniasm/Minipolish and Raven.
 <br>
 I used [Bandage](https://rrwick.github.io/Bandage/) to check the contig circularity. It looked fine, with a clear circular chromosome and what appeared to be 2 plasmids. 
 <br>
-![Bandage](assets/images/bandage.png){: w="400" }
+![Bandage](assets/img/bandage.png){: w="400" }
 <br>
 Clustering the assemblies was straight-forward using Trycycler.
 
@@ -90,7 +90,7 @@ Clustering the assemblies was straight-forward using Trycycler.
 <br>
 I then looked at [FigTree](https://evomics.org/resources/software/molecular-evolution-software/figtree/) to identify out of place contigs. The clustering was succesful - 4 clearly defined clusters - a chromosome of ~5.3Mb and 3 smaller contigs of ~153Kb, ~56Kb and ~4Kb respectively, which were probably plasmids. I ended up removing the D contig in the 3rd cluster since its size was very different to the other ones.
 <br>
-![FigTree](assets/images/figtree.png){: w="300" .center }
+![FigTree](assets/img/figtree.png){: w="300" .center }
 
 
 5. **Alignment and consensus generation**:
@@ -138,8 +138,8 @@ staramr search polypolishkp9.fasta --output-dir ./AMR
 In the chromosome, StarAMR spotted *blaTEM-1b*, which is linked to resistance against piperacillin. The more notable ARGs were found in the plasmid - *qnrB4*, *blaOXA-1*, *aac(6')-Ib-cr* and *aph(3')-Ia*, which gives resistance to multiple antibiotics. The coolest (and a bit worrying) part? It found ***blaDHA-1***, which hasn’t been documented in my region before.
 <br>
 
-![ARGChrom](assets/images/ARGchrom.png){: w="800" }_ARGs in the chromosome_
-![ARGPlasmid](assets/images/ARGplasmid.png){: w="800" }_ARGs in the smaller, IncR plasmid_
+![ARGChrom](assets/img/ARGchrom.png){: w="800" }_ARGs in the chromosome_
+![ARGPlasmid](assets/img/ARGplasmid.png){: w="800" }_ARGs in the smaller, IncR plasmid_
 
 I also found this super cool and easy to use web interface that lets you visualise and annotate bacterial genomes, with interactive circule and linear genome maps - [Proksee](https://proksee.ca/). I initially used pyCirclize to make some circos but this is just super fun to use. I'll make a separate journal entry about it since the whole Python deal is interesting enough to have its own post. 
 
@@ -147,11 +147,11 @@ Anyway, here are the circos generated with Proksee, as well as a zoomed view of 
 
 <div style="display: flex; justify-content: space-between;">
    <figure style="text-align: center;">
-      <img src="assets/images/prokseechrom.png" height="300" alt="K. pneumoniae chromosome">
+      <img src="assets/img/prokseechrom.png" height="300" alt="K. pneumoniae chromosome">
       <figcaption style="font-size: 0.8em; opacity: 0.6;">K. pneumoniae chromosome</figcaption>
    </figure>
    <figure style="text-align: center;">
-      <img src="assets/images/prokseeplasmid.png" height="300" alt="K. pneumoniae smaller, IncR plasmid">
+      <img src="assets/img/prokseeplasmid.png" height="300" alt="K. pneumoniae smaller, IncR plasmid">
       <figcaption style="font-size: 0.8em; opacity: 0.6;">K. pneumoniae plasmid</figcaption>
    </figure>
 </div>
