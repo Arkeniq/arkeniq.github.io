@@ -2,8 +2,8 @@
 title:  "🧾 Making a blog on Github Pages using Jekyll"
 date: 2024-01-03 13:37:00 +0200
 last_modified_at: 2024-01-25 23:26:00 +0200
-categories: [Misc]
-tags: [Misc]
+description: "Getting a website up and running"
+tags: [Coding, Tools]
 ---
 
 Decided I should start a personal journal to keep track of my workflows and small little projects. Haven't got much now but it'll hopefully add up. I'll try to include interesting data, tools or sequencing/laboratory related information sources. I'll also use this place as my own project journal - helping me keep track of things I've learned and worked on over the years. 

@@ -2,10 +2,8 @@
 title: "🧫 Sequencing a peculiar <i>K. pneumoniae</i> isolate"
 date: 2024-02-24 14:14:00 +0200
 last_modified_at: 2024-02-25 23:26:00 +0200
-layout: post
 description: "ARGs found in a weird looking KP culture"
-categories: [bioinformatics, sequencing]
-tags: [Klebsiella, sequencing, bioinformatics]
+tags: [Drylab, Wetlab]
 ---
 
 
@@ -30,7 +28,7 @@ I've started a sequencing run from an atypical *Klebsiella pneumoniae* isolate t
 
 ## Drylab Time 🧬
 
-I wanted to test RRWick's new tool - [Trycycler](https://github.com/rrwick/Trycycler). It's designed to generate high-quality consensus assemblies from long-read sequencing data. Unlike traditional assemblers that rely on a single method, Trycycler takes a hybrid approach by combining multiple assemblies of the same dataset, leveraging their strengths to produce a more accurate and contiguous final assembly. It seemed like the perfect moment to test this method so I had to give it a go.
+I wanted to test RRWick's new tool - [Trycycler](https://github.com/rrwick/Trycycler). It's designed to generate high-quality bacterial consensus assemblies from long-read sequencing data. Unlike traditional assemblers that rely on a single method, Trycycler takes a hybrid approach by combining multiple assemblies of the same dataset, leveraging their strengths to produce a more accurate and contiguous final assembly. It seemed like the perfect moment to test this method so I had to give it a go.
 
 ![Trycycler workflow](assets/images/trycyclerworkflow.png)
 _Trycycler workflow. Credits: Trycycler Github_
