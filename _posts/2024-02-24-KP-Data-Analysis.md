@@ -1,5 +1,5 @@
 ---
-title: "Sequencing a peculiar <i>K. pneumoniae</i> isolate"
+title: "🧫 Sequencing a peculiar <i>K. pneumoniae</i> isolate"
 date: 2024-02-24 14:14:00 +0200
 last_modified_at: 2024-02-25 23:26:00 +0200
 layout: post
