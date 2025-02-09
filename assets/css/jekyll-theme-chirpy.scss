@@ -1,0 +1,12 @@
+---
+---
+
+@use 'main
+{%- if jekyll.environment == 'production' -%}
+  .bundle
+{%- endif -%}
+';
+
+/* append your custom style below */
+
+#sidebar .site-subtitle{font-size:80%;color:var(--site-subtitle-color);margin-top:.25rem;word-spacing:1px;-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none}
