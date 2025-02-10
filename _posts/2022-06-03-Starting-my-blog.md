@@ -6,7 +6,7 @@ description: "Getting a website up and running"
 tags: [Coding, Tools]
 ---
 
-Decided I should start a personal journal to keep track of my workflows and small little projects. Haven't got much now but it'll hopefully add up. I'll try to include interesting data, tools or sequencing/laboratory related information sources. I'll also use this place as my own project journal - helping me keep track of things I've learned and worked on over the years. 
+Decided I should start a personal journal to keep track of my personal projects and wetlab/drylab workflows. Haven't got much now but it'll hopefully add up. I'll try to include interesting data, tools or sequencing/laboratory related information sources. I'll also use this place as my own project journal - helping me keep track of things I've learned and worked on over the years. 
 
 Now let's talk about how this webpage came to life. The whole concept is rather easy to understand.
 
@@ -23,7 +23,7 @@ Using git, you can clone your repo locally, open it using VS Code and start maki
 
 
 ### Step 4: Getting a domain 
-You can just use `<username>.github.io.` as your address but why not get a super cheap top level domain (TLD) for your website? I found this super cool price comparison tool called [TLD-list.com](https://tld-list.com/) where you can check domain prices and sort them by popularity or cheapest registration/renewal/transfer cost. If you want a complete list of available TLDs there's one made by the Internet Assigned Numbers Authority (IANA) linked [here](https://data.iana.org/TLD/tlds-alpha-by-domain.txt). Yes, apparently .pizza is a TLD and yes, it costs more than a pizza 🍕 to renew every year, compared to .com which is currently super cheap, at just $10/yr.
+You can just use `<username>.github.io.` as your address but why not get a cheap top level domain (TLD) for your website? I found this neat price comparison tool called [TLD-list.com](https://tld-list.com/) where you can check domain prices and sort them by popularity or cheapest registration/renewal/transfer cost. If you want a complete list of available TLDs there's one made by the Internet Assigned Numbers Authority (IANA) linked [here](https://data.iana.org/TLD/tlds-alpha-by-domain.txt). Yes, apparently .pizza is a TLD and yes, it costs more than a pizza 🍕 to renew every year, compared to .com which is currently super cheap, at just $10/yr.
 
 ---
 

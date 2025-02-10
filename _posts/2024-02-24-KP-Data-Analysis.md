@@ -19,7 +19,7 @@ I've started a sequencing run from an atypical *Klebsiella pneumoniae* isolate t
 <dd>SQK-LSK110 ligation sequencing kit, NEBNext Ultra II End repair module, NEBNext Quick Ligation Module and AMPure XP Beads were used for library preparation.</dd>
 
 <dt>3. Sequencing</dt>
-<dd>Loading the library on an R9.4.1 flowcell on the MinION Mk1B was straight forward. <b>13.6 fmoles</b> of library used. The flowcell used was being stored at 4°C for months after being previously used, but it still had a decent amount of active pores, at least on the initial check - 920 out of the maximum advertised amount of 2048.</dd>
+<dd>Loading the library on an R9.4.1 flowcell on the MinION Mk1B was straight forward. <b>13.6 fmoles</b> of library used. The flowcell used was being stored at 4°C for months after its previous run, but it still had a decent amount of active pores, at least on the initial check - 920 out of the maximum advertised amount of 2048.</dd>
 
 <dt>4. Basecalling</dt>
 <dd>The next day, after 19 hours of run time, we were left with approx. 580 pores and enough reads (612k passed) to stop the run. The real-time basecalling (HAC model) generated <b>4Gb</b>, with an approx. <b>N50 of 16Kb</b>. Estimated coverage of <b>~742x</b>.</dd>
