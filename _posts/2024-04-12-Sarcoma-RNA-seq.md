@@ -1,20 +1,20 @@
 ---
-title: "🧬 RNA-Seq Analysis of [Your Sample]"
+title: "🧬 Sarcoma RNA-Seq DEG Run"
 date: 2025-02-12 14:00:00 +0200
 last_modified_at: 2025-02-12 23:26:00 +0200
-description: "Differential gene expression analysis from RNA-Seq data"
-tags: [Drylab, Bioinformatics, RNA-Seq]
+description: "RNA-Seq differential gene expression analysis from sarcoma patients"
+tags: [Drylab, Wetlab, RNA-Seq]
 ---
 
 ## Experimental Overview 🧪
 
-RNA-Seq analysis was performed to identify differentially expressed genes (DEGs) between [Condition A] and [Condition B]. The goal was to determine pathways involved in [biological process].
+RNA-Seq analysis was performed to identify differentially expressed genes (DEGs) between and 
 
 ## Wetlab Phase 💧
 
 <dl>
 <dt>1. RNA Extraction</dt>
-<dd>Total RNA was extracted using the [extraction kit], followed by DNase treatment. Yield: <b>X ng/µL</b>, RIN: <b>X.X</b>.</dd>
+<dd>Total RNA was extracted using QIAGEN's RNeasy Fibrous Tissue Kit from tumoral tissue preserved in RNAlater. After extraction, Invitrogen Qubit RNA High Sensitivity Kit was used to assess the RNA concentration. Yield: <b>X ng/µL</b>, RIN: <b>X.X</b>.</dd>
 
 <dt>2. Library Preparation</dt>
 <dd>mRNA enrichment via poly(A) selection, fragmentation, cDNA synthesis, and adapter ligation using [kit name]. Libraries were QC'd with Bioanalyzer.</dd>
