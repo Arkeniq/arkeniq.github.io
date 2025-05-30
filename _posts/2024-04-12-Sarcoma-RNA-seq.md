@@ -1,12 +1,10 @@
 ---
-title: "🧬 Sarcoma RNA-Seq DEG Run"
+title: "🧬 Sarcoma RNA-Seq DGE Run"
 date: 2024-07-12 14:00:00 +0200
 last_modified_at: 2024-07-15 23:26:00 +0200
 description: "RNA-Seq differential gene expression analysis from sarcoma patients"
-tags: [Drylab, Wetlab, RNA-Seq]
+tags: [Bioinformatics, R, Sarcoma, DESEQ2, Sequencing]
 ---
-
-## Experimental Overview 🧪
 
 RNA-Seq analysis was performed to identify differentially expressed genes (DEGs) between 12 sarcoma tissue samples and 2 controls. The amount of physical samples was limited, especially the amount of control samples we had. To add to that problem, the two control samples we had available were different in tissue type too - one was mostly adipose and the other muscular tissue. Decided to give it a go and try my best to make some sort of DGE analysis out of the available data, just to learn some of that RNA-seq goodness that everybody is bragging about. Here goes...
 
