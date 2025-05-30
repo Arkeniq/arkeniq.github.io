@@ -7,7 +7,9 @@ tags: [Drylab, Wetlab]
 ---
 
 
-I've started a sequencing run from an atypical *Klebsiella pneumoniae* isolate that displayed unusual growth characteristics and high antibiotic resistance. By sequencing its genome, I wanted to identify the resistance genes responsible for its phenotype and understand their genomic context.
+Antibiotic resistance is a growing challenge, and sometimes an interesting case lands on your bench thanks to great collaborations. That was exactly the situation with a particularly stubborn *Klebsiella pneumoniae* that our colleagues at the National Institute for Research and Development in Microbiology and Immunology “Cantacuzino” had cultivated. After observing its unusual growth characteristics and alarmingly high antibiotic resistance, they kindly forwarded it to us for a deeper dive using whole-genome sequencing. My aim was to pinpoint the specific antibiotic resistance genes (ARGs) this isolate was using for its defense and to understand their full genomic context – especially whether these genes were on plasmids, which can often be tricky to fully characterize.
+
+---
 
 ## 💧 Wetlab phase
 
@@ -25,6 +27,8 @@ I've started a sequencing run from an atypical *Klebsiella pneumoniae* isolate t
 <dd>The next day, after 19 hours of run time, we were left with approx. 580 pores and enough reads (612k passed) to stop the run. The real-time basecalling (HAC model) generated <b>4Gb</b>, with an approx. <b>N50 of 16Kb</b>. Estimated coverage of <b>~742x</b>.</dd>
 
 </dl>
+
+---
 
 ## 🧬 Data analysis
 
@@ -128,6 +132,7 @@ Using some short Illumina reads from our friends over at the Cantacuzino Institu
    ```
    {: .nolineno }
 
+---
 
 ## 🦠 ARG detection 
 
@@ -158,6 +163,19 @@ Anyway, here are the circos generated with Proksee, as well as a zoomed view of 
       <figcaption style="font-size: 0.8em; opacity: 0.6;">K. pneumoniae plasmid</figcaption>
    </figure>
 </div>
+---
+
+## 📖 From a "weird bug" to a regional first
+
+The work on this particular *Klebsiella pneumoniae* isolate, especially the successful identification of the *blaDHA-1* gene on one of its plasmids – a first for this species in Romania  – didn't just end with the analysis.
+
+We were pleased to be able to share these findings as a presentation at the **2024 AMLR Conference** (The Romanian Association of Laboratory Medicine). Furthermore, this study detailing the genomic analysis and the *blaDHA-1* discovery was also **published in the Romanian Journal of Laboratory Medicine**. It's always good when detailed lab work and bioinformatics can contribute to the broader scientific record on important topics like antibiotic resistance.
+
+You can read the abstract [here](https://www.rrml.ro/articole/2024/2024_1_supliment.pdf), on page 77.
+
+![AMLR](assets/images/AMLR.jpg){: w="600" }_AMLR 2024 Conference_
+
+---
 
 
 ## 🤔 Final thoughts

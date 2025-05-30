@@ -76,17 +76,6 @@ featureCounts -S 2 -p -T 48 -a Homo_sapiens.GRCh38.111.gtf -o FeatureCountsFinal
 ```
 {: .nolineno }
 
-```stl
-solid MyCoolModel
-  facet normal 0.0 -1.0 0.0
-    outer loop
-      vertex 0.0 0.0 0.0
-      vertex 1.0 0.0 0.0
-      vertex 0.0 0.0 1.0
-    endloop
-  endfacet
-endsolid MyCoolModel
-```
 ---
 
 #### 4. Differential Expression Analysis
@@ -283,6 +272,18 @@ For instance, in the analysis comparing soft tissue tumors against control sampl
 ![MVR_HeatmapTop50](assets/images/MVR_HeatmapTop50.png){: w="800" }
 
 When comparing myosarcomas to other soft tissue tumors, a heatmap of the top 50 differentially expressed genes clearly showed a cluster of myosarcoma samples with distinct expression patterns, such as lower expression of the *H4C16* gene compared to other tumor types.
+
+---
+
+## Publishing in the Romanian Journal of Laboratory Medicine
+
+ This whole sarcoma RNA-seq exploration also led to a presentation at the 2024 AMLR Conference (The Romanian Association of Laboratory Medicine) and got published in the **Romanian Journal of Laboratory Medicine**! 
+
+The combination of manual DESeq2 analysis, the use of Illumina Dragen RNA pipeline, and a small detour with an interesting tool called [BulkDGD](https://github.com/Center-for-Health-Data-Science/bulkDGD) resulted in a nice little comparison of all these approaches.
+
+BulkDGD was a bit of a wild ride! The idea is cool - it uses a generative model to figure out how samples are different and for DGE. It was genuinely fun to tinker with. While the generative model concept was interesting, BulkDGD wasn't the best fit for this small dataset, as its own model didn't include many of the genes found in the TruSight Panel. Playing with its generative approach was great experience. In the end, using these different tools together helped me build a better understanding on how to really use the data and what other possibilities one can find out there. 
+
+You can read the abstract [here](https://www.rrml.ro/articole/2024/2024_1_supliment.pdf), on page 19.
 
 ---
 
