@@ -9,7 +9,7 @@ tags: [Drylab, Wetlab]
 
 I've started a sequencing run from an atypical *Klebsiella pneumoniae* isolate that displayed unusual growth characteristics and high antibiotic resistance. By sequencing its genome, I wanted to identify the resistance genes responsible for its phenotype and understand their genomic context.
 
-## Wetlab Phase 💧
+## 💧 Wetlab phase
 
 <dl>
 <dt>1. DNA Extraction</dt>
@@ -26,20 +26,20 @@ I've started a sequencing run from an atypical *Klebsiella pneumoniae* isolate t
 
 </dl>
 
-## Drylab Time 🧬
+## 🧬 Data analysis
 
 I wanted to test RRWick's new tool - [Trycycler](https://github.com/rrwick/Trycycler). It's designed to generate high-quality bacterial consensus assemblies from long-read sequencing data. Unlike traditional assemblers that rely on a single method, Trycycler takes a hybrid approach by combining multiple assemblies of the same dataset, leveraging their strengths to produce a more accurate and contiguous final assembly. It seemed like the perfect moment to test this method so I had to give it a go.
 
 ![Trycycler workflow](assets/images/trycyclerworkflow.png)
 _Trycycler workflow. Credits: Trycycler Github_
 
-1. Running **EPI2ME's WIMP**:
+1. Running **EPI2ME's WIMP**
 <br>
 Just to make sure our reads are *K. pneumoniae*.
 <br>
 ![WIMP](assets/images/WIMPKP.png){: w="300" .center }
 
-2. **QC and filtering** using Filtlong: <br>
+2. **QC and filtering** using Filtlong <br>
 QC scores were good, we kept fragments longer than 1Kb to help with the assembly.
 
     ```bash
@@ -47,8 +47,9 @@ QC scores were good, we kept fragments longer than 1Kb to help with the assembly
    fastqc KP9_sup_seq.fastq
    filtlong –min_length 1000 –keep_percent 95 KP9_sup_seq.fastq > KP9_sup_filtrat.fastq
     ```
+    {: .nolineno }
 
-3. **Subsampling reads**: <br>
+3. **Subsampling reads** <br>
 This step creates the assemblies.We used Flye, Miniasm/Minipolish and Raven.
 
    ```bash
@@ -72,9 +73,10 @@ This step creates the assemblies.We used Flye, Miniasm/Minipolish and Raven.
    raven --threads 52 --disable-checkpoints subsets/sample_”$s”.fastq > assemblies/assembly”$s”/assembly”$s”.fasta
    done
    ```
+   {: .nolineno }
 
 
-4. **Manual curation and clustering**:
+4. **Manual curation and clustering**
 <br>
 I used [Bandage](https://rrwick.github.io/Bandage/) to check the contig circularity. It looked fine, with a clear circular chromosome and what appeared to be 2 plasmids. 
 <br>
@@ -85,13 +87,14 @@ Clustering the assemblies was straight-forward using Trycycler.
    ```bash
    trycycler cluster --threads 48 --assemblies assemblies/*.fasta --reads KP9_sup_filtrat.fastq --out_dir cluster
    ```
+   {: .nolineno }
 <br>
 I then looked at [FigTree](https://evomics.org/resources/software/molecular-evolution-software/figtree/) to identify out of place contigs. The clustering was succesful - 4 clearly defined clusters - a chromosome of ~5.3Mb and 3 smaller contigs of ~153Kb, ~56Kb and ~4Kb respectively, which were probably plasmids. I ended up removing the D contig in the 3rd cluster since its size was very different to the other ones.
 <br>
 ![FigTree](assets/images/figtree.png){: w="300" .center }
 
 
-5. **Alignment and consensus generation**:
+5. **Alignment and consensus generation**
 <br>
 Before generating the consensus sequence, the contigs have to be reconciled, aligned and partitioned. **Reconciling contigs** refers to the process of merging or resolving discrepancies between overlapping contigs, whereas the **multiple sequence alignment (MSA)** aligns the fragments against each other to identify regions of similarity/difference. **Partinioning** organizes the sequences into distinct regions which can be processed independently, improving accuracy. Contig reconciliation was the only step that needed manual processing, having me remove a few contigs that had low pairwise identities to one another. I only kept those with higher than 99% pairwise identity. The latter steps were as straightforward as they can get.
 <br>
@@ -102,8 +105,9 @@ Before generating the consensus sequence, the contigs have to be reconciled, ali
    trycycler partition –threads 48 –reads KP9_sup_filtrat.fastq –cluster_dir clusters/cluster_00*
    trycycler consensus –threads 48 –cluster_dir clusters/cluster_00*
    ```
+   {: .nolineno }
 
-6. **Long and short read polishing**:
+6. **Long and short read polishing**
 <br>
 Using some short Illumina reads from our friends over at the Cantacuzino Institute I was able to take the clusters not only through **Medaka** for long-read polishing, but also **Polypolish**.
 <br>
@@ -122,16 +126,17 @@ Using some short Illumina reads from our friends over at the Cantacuzino Institu
    bwa mem -t 48 -a KP9S20_consensus.fasta shortreads/kp9_sr2.fastq.gz > shortreads/pp_align_2.sam
    polypolish KP9S20_consensus.fasta shortreads/pp_align_1.sam shortreads/pp_align_2.sam > shortreads/polypolishkp9.fasta
    ```
+   {: .nolineno }
 
 
-
-## ARGs Detection 🦠
+## 🦠 ARG detection 
 
 To identify ARGs I've used another awesome tool - [StarAMR](https://github.com/phac-nml/staramr) which is able to scan the .FASTA against ResFinder/PointFinder/PlasmidFinder DBs, making a snazzy report of known antimicrobial resistance genes it detects.
 
 ```bash
 staramr search polypolishkp9.fasta --output-dir ./AMR
 ```
+{: .nolineno }
 
 In the chromosome, StarAMR spotted *blaTEM-1b*, which is linked to resistance against piperacillin. The more notable ARGs were found in the plasmid - *qnrB4*, *blaOXA-1*, *aac(6')-Ib-cr* and *aph(3')-Ia*, which gives resistance to multiple antibiotics. The coolest (and a bit worrying) part? It found ***blaDHA-1***, which hasn’t been documented in my region before.
 <br>
@@ -155,10 +160,6 @@ Anyway, here are the circos generated with Proksee, as well as a zoomed view of 
 </div>
 
 
-## Conclusions 🤔
+## 🤔 Final thoughts
 
 Trycyler worked great and was rather easy to use. The idea behind it is very solid too, improving accurancy over other tools like Unicycler. Learned a lot from this and found some cool ARGs. Time to dig deeper and try to understand where this *Klebsiella pneumoniae* isolate got its weird plasmid from. 
-
----
-
-Next up: phylogenetic analysis and comparison with other sequenced strains. Stay tuned for more genomic adventures! 🔬✨
