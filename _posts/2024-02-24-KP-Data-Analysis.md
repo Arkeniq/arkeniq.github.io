@@ -153,7 +153,7 @@ I also found this super cool and easy to use web interface that lets you visuali
 
 Anyway, here are the circos generated with Proksee, as well as a zoomed view of the ***blaDHA-1*** area of the plasmid, with some mobile genomic elements (MGEs) I had Proksee annotate for me. 
 
-<div style="display: flex; justify-content: space-between;">
+<div style="display: flex; justify-content: space-between; gap: 10px;">
    <figure style="text-align: center;">
       <img src="assets/images/prokseechrom.png" height="300" alt="K. pneumoniae chromosome">
       <figcaption style="font-size: 0.8em; opacity: 0.6;">K. pneumoniae chromosome</figcaption>
