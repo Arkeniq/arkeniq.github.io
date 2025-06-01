@@ -1,5 +1,5 @@
 ---
-title: "🧬 Sarcoma RNA-Seq DGE Run"
+title: "🧬 Sarcoma RNA-Seq DGE tryharding"
 date: 2024-07-12 14:00:00 +0200
 last_modified_at: 2024-07-15 23:26:00 +0200
 description: "RNA-Seq differential gene expression analysis from sarcoma patients"

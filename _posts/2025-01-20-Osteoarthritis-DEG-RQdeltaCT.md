@@ -2,15 +2,17 @@
 title: "🔬 DGE in osteoarthritis patients using qPCR & RQdeltaCT"
 date: 2025-01-20 11:00:00 +0200
 last_modified_at: 2025-05-15 21:41:00 +0200
-description: "A walkthrough of relative quantification of gene expression in an osteoarthritis dataset using the RQdeltaCT R package"
+description: "Relative quantification of gene expression in an osteoarthritis dataset"
 tags: [Bioinformatics, R, qPCR, Osteoarthritis, RQdeltaCT]
 ---
 
-My colleague Mădălina was working on an interesting osteoarthritis project - she was looking to perform relative quantification of gene expression for a handful of genes that were amplified in triplicate using the Bio-Rad CFX Real-Time PCR system, from 28 osteoarthritis and 3 control samples, and an average Ct was calculated for each sample. I jumped in to help with the data analysis using `R`! This post walks through the main steps we took, primarily leveraging a neat R package called [RQdeltaCT](https://github.com/Donadelnal/RQdeltaCT) which is designed to streamline this kind of analysis. I followed the instruction found on [CRAN](https://cran.r-project.org/web/packages/RQdeltaCT/vignettes/my-vignette.html).
+My colleague Mădălina was working on an interesting osteoarthritis project - she was looking to perform relative quantification of gene expression for a handful of genes that were amplified in triplicate using the Bio-Rad CFX Real-Time PCR system, from 28 osteoarthritis and 3 control samples, and an average Ct was calculated for each sample. She asked if I could join in to help with the data analysis using `R`. 
+
+This post walks through the main steps we took, primarily leveraging a neat R package called [RQdeltaCT](https://github.com/Donadelnal/RQdeltaCT) which is designed to streamline this kind of analysis. I followed the instruction found on [CRAN](https://cran.r-project.org/web/packages/RQdeltaCT/vignettes/my-vignette.html).
 
 ### 🛠️ Setting up the environment 
 
-First things first, I needed to get R ready with the necessary packages and load the data. I started by ensuring all the required packages were installed. The star of the show was `RQdeltaCT` along `tidyverse` for general data manipulation.  erged all the raw Ct data into a CSV file named `data_Ct_long.csv` which was loaded using the `read_Ct_long()` function after being molded into the required format.
+First things first, I needed to get R ready with the necessary packages and load the data. I started by ensuring all the required packages were installed. The star of the show was `RQdeltaCT` along `tidyverse` for general data manipulation. Mădălina merged all the raw Ct data into a CSV file named `data_Ct_long.csv` which I then loaded in the environment using the `read_Ct_long()` function after editing it with the required format.
 
 ```r
 # Set the working directory 
@@ -87,7 +89,7 @@ control_heatmap(data.Ct,
 ```
 {: .nolineno}
 
-Next, I looked for samples or genes with a high fraction of unreliable Ct values (e.g., "Undetermined" or >38.5).
+Next, I looked for samples or genes with a high fraction of unreliable Ct values.
 
 ```r
 # Finding samples with >50% unreliable Ct values
@@ -104,7 +106,7 @@ print(paste("Low quality genes to remove:", low.quality.genes))
 
 In this case, both `low.quality.samples` and `low.quality.genes` lists were empty, meaning all samples and genes passed this particular QC check.
 
-We then explored filtering the data using `filter_Ct` primarily to handle values flagged as "Undetermined" or those exceeding maxCt.
+We then explored filtering the data using `filter_Ct` primarily to handle values flagged as "Undetermined" or those exceeding maxCt (which I had previously raised to 38.5 due to some genes having average Cts of a hair higher than 38).
 
 ```r
 data.CtF <- filter_Ct(data = data.Ct,
@@ -131,7 +133,7 @@ data.Ct.ready <- make_Ct_ready(data = data.CtF,
 
 ### 🎫 Finding a reliable reference gene, normalising, further QC 
 
-A stable reference (housekeeping) gene is essential for normalisation. We used the ctrlGene package to help identify the best one from our candidates ("ACTB1", "GUSB2").
+A stable reference (housekeeping) gene is essential for normalisation. We used the ctrlGene package to help identify the best one from our candidates (*ACTB1*, *GUSB2*).
 
 ```r
 library(ctrlGene) # For finding reference genes
@@ -218,7 +220,7 @@ FCh.plot <- FCh_plot(data = results.ddCt,
 
   ![Fold change plot](assets/images/FCh_plot.png){: w="500" }_Fold change plot_
 
-I used **Boxplots (`results_boxplot`)** for the genes found to have higher significance ("JUN_5", "DUSP1_6", "NFKBIA7") in the Fch plot, in order to visualise their expression levels and significance between groups. I made both faceted and non-faceted versions but chose the faceted one in the end.
+I used **Boxplots (`results_boxplot`)** for the genes found to have higher significance (*JUN_5*, *DUSP1_6*, *NFKBIA7*) in the Fch plot, in order to visualise their expression levels and significance between groups. I made both faceted and non-faceted versions but chose the faceted one in the end.
 
 ```r
 # Example for a faceted boxplot for the selected genes
