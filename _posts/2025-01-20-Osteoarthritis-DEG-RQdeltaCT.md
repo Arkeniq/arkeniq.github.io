@@ -3,7 +3,7 @@ title: "🔬 DGE in osteoarthritis patients using qPCR & RQdeltaCT"
 date: 2025-01-20 11:00:00 +0200
 last_modified_at: 2025-05-15 21:41:00 +0200
 description: "Relative quantification of gene expression in an osteoarthritis dataset"
-tags: [Bioinformatics, R, qPCR, Osteoarthritis, RQdeltaCT]
+tags: [Bioinformatics, R, qPCR, RQdeltaCT, Tools]
 ---
 
 My colleague Mădălina was working on an interesting osteoarthritis project - she was looking to perform relative quantification of gene expression for a handful of genes that were amplified in triplicate using the Bio-Rad CFX Real-Time PCR system, from 28 osteoarthritis and 3 control samples, and an average Ct was calculated for each sample. She asked if I could join in to help with the data analysis using `R`. 

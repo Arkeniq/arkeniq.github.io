@@ -2,7 +2,7 @@
 title: "🧬 Python's pyCirclize as a genome visualisation tool"
 date: 2023-09-17
 description: "Using the pyCirclize Python library to generate a circular genome plot"
-tags: [Python, Bioinformatics, DataViz, pyCirclize, ARGs]
+tags: [Python, Coding, pyCirclize, Tools]
 ---
 
 Was recently essing around with some bacterial genomes and I wanted a neat way to visualise a plasmid's genomic layout. Found this cool tool called **pyCirclize**. It's a Python library built on Matplotlib, designed for creating beautiful circular visualisations, including Circos plots which are perfect for genomics. You can find more about it on its [GitHub repository](https://github.com/moshi4/pyCirclize) or its [documentation page](https://moshi4.github.io/pyCirclize/). 
