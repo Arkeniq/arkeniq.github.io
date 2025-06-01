@@ -1,7 +1,7 @@
 ---
 title:  "🧾 Making a blog on Github Pages using Jekyll"
-date: 2024-01-03 13:37:00 +0200
-last_modified_at: 2024-01-25 23:26:00 +0200
+date: 2023-06-03 13:37:00 +0200
+last_modified_at: 2023-06-25 23:26:00 +0200
 description: "Getting a website up and running"
 tags: [Coding, Tools]
 ---
