@@ -3,18 +3,19 @@ title: "🩹 Designing primers for rapid skin pathogen detection"
 date: 2024-05-16
 last_modified_at: 2024-05-31
 description: "Designing and testing RPA/PCR primers for point-of-care diagnosis of skin infections"
-tags: [RPA, Primer Design, PCR, Wetlab, Bioinformatics, Point-of-Care, IMT]
+tags: [Primer Design, Wetlab, Bioinformatics]
 full-width: true
 ---
 
 ### 💡 An idea for faster skin infection diagnosis 
 
-Our colleagues at the National Institute for Research and Development in Microtechnologies (IMT Bucharest) had a brilliant idea - leveraging an isothermal amplification method, specifically the Recombinase Polymerase Amplification (RPA), in a Point-Of-Care device. The beauty of RPA is its potential to work at a pretty low temperature, which got us thinking – could we even use body heat to drive the reaction? This thinking laid the groundwork for aiming towards an interesting concept: a diagnostic 'band-aid' that could identify pathogens in skin lesions.
+Our colleagues at the National Institute for Research and Development in Microtechnologies (IMT Bucharest) had a brilliant idea - leveraging an isothermal amplification method, specifically the Recombinase Polymerase Amplification (RPA), in a Point-Of-Care device. The beauty of RPA is its potential to work at a pretty low temperature, which got us thinking – could we even use body heat to drive the reaction? This thinking laid the groundwork for aiming towards an interesting concept: a diagnostic 'band-aid' that could identify pathogens in skin lesions, and we even got to present our work at AMLR 2024.
 
+![AMLR presentation](assets/images/AMLRconfocal.jpg){: w="600" }
 
 ### 🧬 Good moment for me to learn how to design primers
 
-Did my homework and scoured the interwebs for how to do it properly, and also had a good bunch of guidance from other senior lab colleagues. Before jumping into design, we set some ground rules for what makes a good RPA primer, drawing from established guidelines:
+Did my homework and scoured the interwebs for how to do it properly, and also had a good bunch of guidance from other senior lab colleagues. Before jumping into design, I set some ground rules for what makes a good RPA primer, drawing from established guidelines:
 
 * Length: 27-35bps for RPA, 18-24bps for PCR
 * GC Content: Less than 70% for RPA, 40-60% for PCR 
@@ -25,7 +26,7 @@ Did my homework and scoured the interwebs for how to do it properly, and also ha
 
 ---
 
-## 🎯 Targets and tools
+### 🎯 Targets and tools
 
 I focused on three key microorganisms: *Haemophilus influenzae*, *Pseudomonas aeruginosa*, and *Aspergillus fumigatus*. For each, I selected a specific target gene based on existing research that showed its suitability for species-specific detection.
 
@@ -71,7 +72,7 @@ Eventually, after lots of trial and error and multiple Primer Blast runs, I sett
 
 ---
 
-## 💧 DNA extraction & results
+### 💧 DNA extraction & results
 
 With primer candidates designed, I needed DNA from the actual microbes. Our friends at the National Institute for Research and Development in Microbiology and Immunology “Cantacuzino” gave us some *test subjects* and I started working. I used the **Wizard Genomic DNA Purification kit from Promega**. The kit uses a slightly different approach depending on the bug: Gram-negative bacteria were lysed by incubating them at 80°C, while Gram-positive bacteria and fungi needed a bit of enzymatic lysis to break them open - lysozyme and lyticase, respectively.
 
@@ -106,7 +107,7 @@ Melania used PDMS (Polydimethylsiloxane - a silicone polymer) to create tiny wel
 
 ---
 
-## 🔬 Confocal microscopy visualisation 
+### 🔬 Confocal microscopy visualisation 
 
 To see if the solid-phase RPA worked, we used a Carl Zeiss LSM 710 Confocal Microscope. This gave us a detailed picture of where the Cy3 fluorescence was located in the well and how intense it was. We could see that the increased surface area from the nanowires positively influenced the binding of the amplicon. Compared to a negative control (which was completely colorless after washing), the wells where amplification occurred showed significant fluorescence. This confirmed that our solid-phase RPA was a success.
 
@@ -114,10 +115,8 @@ To see if the solid-phase RPA worked, we used a Carl Zeiss LSM 710 Confocal Micr
 
 ---
 
-## 📔 2024 AMLR conference
+### 📔 2024 AMLR conference
 
 I was also really proud to present this research and our findings at the AMLR (The Romanian Association of Laboratory Medicine) conference in 2024. It's always great to share your work with peers. On top of that, this study was also published in the Romanian Journal of Laboratory Medicine (read it [here](https://www.rrml.ro/articole/2024/2024_1_supliment.pdf), on page 74). 
 
 It's fantastic to see collaborative projects like this, bridging bioinformatics, wet lab and microtechnology to contribute to the field of diagnostics. This was a really fun project and I definitely learned a lot.
-
-![AMLR presentation](assets/images/AMLRconfocal.jpg){: w="400" }
