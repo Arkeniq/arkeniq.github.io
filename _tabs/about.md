@@ -11,6 +11,8 @@ My interest in technology started a long time ago. I graduated **Tudor Vianu Nat
 
 After graduating, I looked for a specialty that was close to research and technology. I chose Laboratory Medicine for my residency because it's a paraclinical field, focused on generating the objective data that patient care relies on. I knew this specialty would be the perfect environment to one day connect with my passion for informatics and technology.
 
+![AMLR](assets/images/AMLR.jpg){: w="500" }
+
 Working in one of the largest **molecular pathology** labs at the **Bucharest University Emergency Hospital**, I was right where the data is generated, and when I saw how much information is hidden in sequencing results, my old passion for informatics came back stronger than ever.
 
 Now, I feel ready for the next step - I am starting a Master's in Applied Bioinformatics for Life Sciences to finally bring my two interests together.
