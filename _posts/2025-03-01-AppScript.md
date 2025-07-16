@@ -46,15 +46,13 @@ Let's take a closer look at the `GeneFuziune()` function as an example, since it
 
 ```javascript
 function onOpen() {
-  const ui = SpreadsheetApp.getUi();
-  // Create a menu named "Generare buletine de analiză"
-  const menu = ui.createMenu('Generare buletine de analiză');
-  // Add items to the menu, linking them to specific functions
+  const ui = SpreadsheetApp.getUi(); 
+  const menu = ui.createMenu('Generare buletine de analiză'); // create the menu
   menu.addItem('1. Buletin Gene Fuziune','GeneFuziune');  
   menu.addItem('2. Buletin FLT3-NPM1', 'FLT3NPM1');
   menu.addItem('3. Buletin cKIT','cKit');
-  menu.addItem('4. Buletin BCR-ABL Cantitativ','Optolane');  
-  menu.addToUi(); } // Add the menu to the spreadsheet's UI
+  menu.addItem('4. Buletin BCR-ABL Cantitativ','Optolane');  // add dropdown stuff to the menu
+  menu.addToUi(); }
 
 ```
 {: .nolineno}
@@ -64,24 +62,17 @@ Then we define some constants: the ID of our Google Doc template for this specif
 
 ```javascript
 function GeneFuziune() {
-  // Define the ID of the Google Doc template
   const googleDocTemplate = DriveApp.getFileById('HereGoesTheTemplateID');
-  // This one for the Google Drive folder where new reports will be saved
-  const destinationFolder = DriveApp.getFolderById('HereGoesTheFolderID');
-  
-  // Get the currently active spreadsheet and specifically the 'Registru Hemato' sheet
+  const destinationFolder = DriveApp.getFolderById('HereGoesTheFolderID'); // id for the folder and template used
   const sheet = SpreadsheetApp.getActiveSpreadsheet().getSheetByName('Registru Hemato');
-  // Get all data from the sheet (including headers) as a 2D array of display values
   const rows = sheet.getDataRange().getDisplayValues();
   
-  // Get current date components to format as DD/MM/YYYY
   var d = new Date();
   var curr_date = (d.getDate()).toString().padStart(2, '0');
-  var curr_month = (d.getMonth() + 1).toString().padStart(2, '0'); // Month is 0-indexed
+  var curr_month = (d.getMonth() + 1).toString().padStart(2, '0'); 
   var curr_year = d.getFullYear();
-  var DataDeAzi = curr_date + "/" + curr_month + "/" + curr_year;
+  var DataDeAzi = curr_date + "/" + curr_month + "/" + curr_year; // gets current date, month was padstarted to keep a two digit format even when month is 01
   
-  // Get the Spreadsheet UI environment to show prompts and alerts
   var ui = SpreadsheetApp.getUi();
 ```
 {: .nolineno}
@@ -89,19 +80,17 @@ function GeneFuziune() {
 Next, we start a `while(true)` loop. This allows the user to generate multiple reports one after another without having to re-run the script from the menu each time. Inside the loop, we first prompt the user for the sample ID.
 
 ```javascript
-  // Start a loop that continues until the user cancels
   while(true) {
-    // Prompt the user to enter the "Cod Set" (Sample ID)
     let codsetPrompt = ui.prompt("Pentru ce Cod Set doriti buletinul de GeneFuziune?", ui.ButtonSet.OK_CANCEL);
-    let button = codsetPrompt.getSelectedButton(); // Check which button was pressed
+    let button = codsetPrompt.getSelectedButton(); 
     
-    if (button === ui.Button.CANCEL) break; // If cancel, exit the loop
+    if (button === ui.Button.CANCEL) break; // if cancel, exits loop
     
-    let codset = codsetPrompt.getResponseText().trim().toLocaleUpperCase(); // Get response, trim whitespace, convert to uppercase
+    let codset = codsetPrompt.getResponseText().trim().toLocaleUpperCase(); 
     
-    if (!codset) { // If no Cod Set was entered
+    if (!codset) { 
       ui.alert("Nu a fost introdus un cod. Incercati din nou.");
-      continue; }// Restart the loop to ask for Cod Set again 
+      continue; } // restarts loop to ask for CodSet again 
 ```
 {: .nolineno}
 
@@ -109,18 +98,18 @@ Once we have a sample ID (CodSet) we search for it in our sheet. If it's not fou
 
 
 ```javascript
-    let rowIndex = -1; // Initialize rowIndex to -1 (which would mean its not found)
-    for (let i = 1; i < rows.length; i++){ // Start from row 1 to skip header
-      if(rows[i][0] === codset) { // Assuming Cod Set is in the first column (index 0)
-        rowIndex = i; // Store the row index (0-based for the 'rows' array)
-        break; // Stop searching once found
+    let rowIndex = -1; 
+    for (let i = 1; i < rows.length; i++){ // skips header
+      if(rows[i][0] === codset) {
+        rowIndex = i;
+        break;
       }
     }
     
-    if(rowIndex === -1) { // If Cod Set was not found in the sheet
+    if(rowIndex === -1) { 
       var negasit = ui.alert(`Codul ${codset} nu a fost găsit!\n\nApăsaţi OK pentru a reîncerca căutarea sau CANCEL pentru a renunţa.`, ui.ButtonSet.OK_CANCEL);
-      if (negasit == ui.Button.CANCEL) break; // Exit loop if user cancels
-      else continue; } // Restart loop to ask for a new Cod Set
+      if (negasit == ui.Button.CANCEL) break;
+      else continue; }
 
     let row = rows[rowIndex]; // this gets the data for the specific patient/sample row
 ```
@@ -142,11 +131,10 @@ With all the necessary information gathered (from the sheet and user prompts), w
 
 ```javascript
     const copy = googleDocTemplate.makeCopy(`Rezultat GeneFuziune ${codset} ${row[2]} ${DataDeAzi}`, destinationFolder);
-    // Open the newly created copy to edit it
     const doc = DocumentApp.openById(copy.getId());
-    const body = doc.getBody(); // Get the body of the document to manipulate
+    const body = doc.getBody();
 
-    // Replace placeholders (e.g., {{rezCBFB}}) in the template with the collected data
+    // now we replace placeholders in the template with the collected data both from user input as well as from Spreadsheet
     body.replaceText('{{rezCBFB}}', rezCBFB);
     body.replaceText('{{rezRUNX}}', rezRUNX);
     body.replaceText('{{rezBCR}}', rezBCR);
@@ -154,7 +142,7 @@ With all the necessary information gathered (from the sheet and user prompts), w
     body.replaceText('{{rezE2A}}', rezE2A);
     body.replaceText('{{rezMLL}}', rezMLL);
     body.replaceText('{{DataDeAzi}}', DataDeAzi);
-    body.replaceText('{{CodSet}}', row[0]);    // Assuming CodSet is in column A, so index 0
+    body.replaceText('{{CodSet}}', row[0]);
     body.replaceText('{{NumePacient}}', row[2]);
     body.replaceText('{{CNP}}', row[3]);
     body.replaceText('{{Sex}}', row[4]);
@@ -175,19 +163,19 @@ The script also includes some neat custom data processing. For example, it conve
     
     // now to extract blasts percentage from an 'observations' column N
     const observatii = row[13];
-    let blasti = "-"; // Default if not found
+    let blasti = "-";
     let bucati = observatii.split(/[,;]/); // this splits observations by comma or semicolon
     for (let x = 0; x < bucati.length; x++){
       let bucata = bucati[x].trim();
       if(bucata.includes("%")) { // If a part contains '%' it could mean it's blast percent
-        // Check if the blast % corresponds to the sample type (MO or SP) in observations
+        // this checks if the blast % corresponds to the sample type (MO or SP) in observations column
         if(pax.includes("SP") && bucata.toUpperCase().includes("SP"))
-          blasti = bucata.match(/\d+%/)[0]; // so it extracts the percentage
+          blasti = bucata.match(/\d+%/)[0]; // so it extracts the percentage :)
         if(pax.includes("MO") && bucata.toUpperCase().includes("MO"))
           blasti = bucata.match(/\d+%/)[0];
       }
     }
-    body.replaceText('{{blasti}}', blasti); // and it replaces it in the report
+    body.replaceText('{{blasti}}', blasti);
 ```
 {: .nolineno}
 
@@ -210,20 +198,19 @@ If a row corresponds to a test that wasn't performed (e.g., the result cell is e
 ```javascript
     let search = null;
     let tables = [];
-    // Find all tables in the document
     while(search = body.findElement(DocumentApp.ElementType.TABLE, search)) {
       tables.push(search.getElement().asTable());
     }
     
    tables.forEach(function (table) {
       let rowN = table.getNumRows();
-      for (let r = 0; r < rowN; r++) { // Iterate backwards through rows for safe removal
+      for (let r = 0; r < rowN; r++) { 
                var row =  table.getRow(r);
                let cellN = row.getNumCells();
                for (var s = 0; s < cellN; s++) { // this loops through each cell in the current row
                   let cell = row.getCell(s); // get the current cell
                   if(row.getCell(s).getText().toLowerCase().includes("prezent") || row.getCell(s).getText().toLowerCase().includes("prezenta")){
-                      if(s === 1){ // If the positive result is found in the 2nd cell of the row
+                      if(s === 1){
                         let text = cell.getChild(0).editAsText();
                         text.setBold(true);
                   }
@@ -242,9 +229,8 @@ Finally, after all the content is filled and formatted, the script saves and clo
     // adds a hyperlink to the generated report in the main Google Sheet in column X
     sheet.getRange(rowIndex + 1, 24).setFormula(`=HYPERLINK("${url}", "Buletin GF ${row[0]}")`);
 
-    // ask the user if they want to generate another report for a different Cod Set
     let buletingenerat = ui.alert(`Buletin generat pentru ${row[0]}.\nGenerati buletin GeneFuziune pentru alt Cod Set?`,ui.ButtonSet.OK_CANCEL);
-    if (buletingenerat == ui.Button.CANCEL) break; }}// If not, exit the main while loop
+    if (buletingenerat == ui.Button.CANCEL) break; }}
 ```
 {: .nolineno}
 
