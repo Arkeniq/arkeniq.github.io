@@ -30,9 +30,9 @@ We create a `Circos` object, defining a single sector for our plasmid, with its 
 ```python
 circos = Circos(sectors={gff.name: gff.range_size})
 circos.text("Klebsiella plasmid", size=15)
-sector = circos.sectors[0] # Get the first (and only) sector
+sector = circos.sectors[0] # this gets the first (and only :))) sector
 
-# add the CDs track, define its inner and outer radius as well as color
+# adds the CDs track, define the inner and outer radius as well as color
 cds_track = sector.add_track((90, 100))
 cds_track.axis(fc="#EEEEEE", ec="none")
 ```
@@ -62,7 +62,7 @@ The gene identifier and highlighter took me the most to get right. It's probably
 
 
 ```python
-# Extract general gene labels (non-resistance, non-hypothetical)
+# for xtracting general gene labels (non-resistance, non-hypothetical)
 pos_list, labels = [], []
 for feat in gff.extract_features("CDS"):
     start, end = int(str(feat.location.end)), int(str(feat.location.start))
@@ -71,14 +71,14 @@ for feat in gff.extract_features("CDS"):
     resist_product_info = feat.qualifiers.get("product", [""])[0]
     if label == "" or label.startswith("hypothetical"):
         continue
-    if "resistance" in resist_product_info.lower(): # this checks product info for resistance, case-insensitive
+    if "resistance" in resist_product_info.lower(): # this checks product info for resistance
         continue # skip resistance genes here, as they are plotted separately
     if len(label) > 20:
         label = label[:20] + "..."
     labels.append(label)
     pos_list.append(pos)
 
-# Extract resistance gene labels
+# extracts resistance gene labels
 res_pos_list, res_labels = [], []
 for feat in gff.extract_features("CDS"):
     start, end = int(str(feat.location.end)), int(str(feat.location.start))
@@ -92,7 +92,7 @@ for feat in gff.extract_features("CDS"):
     res_labels.append(label_r)
     res_pos_list.append(pos)
 
-# Plot general gene labels
+# plot for general gene labels
 cds_track.xticks(
     pos_list, labels, label_orientation="vertical",
     show_bottom_line=True, label_size=6, line_kws=dict(ec="grey"),
@@ -110,12 +110,12 @@ cds_track.xticks(
 Finally, to give a sense of scale, I add tick marks at regular intervals (e.g., every 5kb) around the plasmid, aaand voila, all is left to do is saving the figure.
 
 ```python
-# Plot xticks & intervals on inner position for scale
+# this plots "ticks" & intervals on inner position for scale
 cds_track.xticks_by_interval(
     interval=5000, 
     outer=False,   # to place ticks on the inner side of the track
     show_bottom_line=True,
-    label_formatter=lambda v: f"{v/ 1000:.1f} Kb", # Format labels as 'X.Y Kb'
+    label_formatter=lambda v: f"{v/ 1000:.1f} Kb", # format labels as 'X.Y Kb'
     label_orientation="vertical",
     line_kws=dict(ec="grey"),
 )

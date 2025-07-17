@@ -91,10 +91,9 @@ While the overall DESeq2 workflow (getting the data ready, running the stats, ma
 First things first, I needed to load my data into R. This involved reading the gene count matrix and a separate file containing the phenotypes. This phenotype file is key because it tells DESeq2 which samples belong to which group (e.g., "tumor" or "normal"). The `design = ~tissue formula` is fundamental since it instructs DESeq2 to look for gene expression changes that are associated with the different tissue types in my phenotype table.
 
 ```r
-# Load necessary libraries and data
-library(DESeq2) # For the core DE analysis
 
-# read the count and phenotype files
+library(DESeq2)
+
 fcf <- read.csv("FeatureCountsFinal.csv")
 phen <- read.csv("phenotypes.csv")
 
@@ -102,27 +101,25 @@ phen <- read.csv("phenotypes.csv")
 all(colnames(fcf) %in% rownames(phen))
 all(colnames(fcf) == rownames(phen))
 
-# Create the DESeqDataSet object
-# The design '~tissue' tells DESeq2 to model gene expression based on the 'tissue' column
+# '~tissue' tells DESeq2 to model gene expression based on the 'tissue' column
 tissue_dds2x <- DESeqDataSetFromMatrix(countData = fcf,
                                      colData = phen,
                                      design = ~tissue)
  
-# Remove genes with very low counts (e.g., sum of counts across all samples < 10)
+# remove genes with very low counts (sum of counts across all samples < 10)
 keep <- rowSums(counts(tissue_dds2x)) >= 10
 tissue_dds2x <- tissue_dds2x[keep,]
 
 # setting the reference control values
 tissue_dds2x$tissue <- relevel(tissue_dds2x$tissue, ref = "normal")
 
-# Perform the differential expression analysis and writing to CSV, get a summary of the results
+# do DGE and writing to CSV, get a summary of the results
 degtissue <- DESeq(tissue_dds2x)
 rezultate_tissue <- results(degtissue)
 write.csv(rezultate_tissue,"DEG_NormalVSTumor.csv")
 summary(rezultate_tissue)
 
-# Specifying alpha for independent filtering
-# (alpha is the significance cutoff used for optimizing the number of DEGs)
+# specifying alpha for independent filtering (alpha is the significance cutoff used for optimizing the number of DEGs)
 rezultate_tissue005 <- results(degtissue, alpha = 0.05)
 summary(rezultate_tissue005)
 ```
@@ -134,7 +131,7 @@ The results table from DESeq2 contains lots of useful information (log2 fold cha
 BiocManager::install("org.Hs.eg.db")
 library(org.Hs.eg.db)
 
-#transform rez in dataframe
+# transform rez in dataframe
 rezultate_tissue005_df <- as.data.frame(rezultate_tissue005)
 
 rezultate_tissue005_df$Symbol <- mapIds(org.Hs.eg.db, rownames(rezultate_tissue005_df), keytype = "ENSEMBL", column = "SYMBOL")
@@ -145,14 +142,14 @@ write.csv(rezultate_tissue005_df, "DEG_NormalVsTumor.csv")
 Before diving deep into the gene lists, it's good practice to run some diagnostic plots to get a feel for the data and the analysis, like PCA plotting, dispersion analysis, and size factor estimation. With my super small data set, however, these weren't much help.
 
 ```r
-#PCA Plotting
+# PCA Plotting
 vsd <- vst(degtissue, blind = FALSE)
 plotPCA(vsd, intgroup = "tissue")
 
-#Size factor estimation
+# size factor estimation
 sizeFactors(degtissue)
 
-#Dispersion analysis
+# dispersion analysis
 plotDispEsts(degtissue)
 ```
 {: .nolineno }
@@ -165,7 +162,7 @@ With the statistical analysis complete, the next step was to visualize these res
 
 
 ```r
-#dplyr, ggplot install
+# dplyr, ggplot install
 install.packages("dplyr")
 install.packages("ggplot2")
 install.packages("ggrepel")
@@ -176,7 +173,7 @@ library(ggrepel)
 library(ComplexHeatmap)
 
 
-#Generating VolcanoPlots
+# VolcanoPlots
 vol <- rezultate_tissue005_df %>%
   filter(!is.na(padj)) %>%
   filter(!is.na(Symbol))
@@ -224,7 +221,7 @@ ggplot(vol, aes(x = log2FoldChange, y = -log10(padj), color = Regulation)) +
   geom_vline(xintercept = c(-5, 5), linetype = "dashed", color = "darkred", linewidth=0.5)
 
 
-#Generating HeatMaps
+# HeatMaps
 toptissuegenes <- rezultate_tissue005_df %>%
   arrange(padj)%>%
   head(50)

@@ -14,8 +14,7 @@ This post walks through the main steps we took, primarily leveraging a neat R pa
 
 First things first, I needed to get R ready with the necessary packages and load the data. I started by ensuring all the required packages were installed. The star of the show was `RQdeltaCT` along `tidyverse` for general data manipulation. Mădălina merged all the raw Ct data into a CSV file named `data_Ct_long.csv` which I then loaded in the environment using the `read_Ct_long()` function after editing it with the required format.
 
-```r
-# Set the working directory 
+```r 
 setwd("S:/BioMol/RQdeltaCT")
 install.packages("remotes") 
 remotes::install_github("Donadelnal/RQdeltaCT")
@@ -23,7 +22,7 @@ library(RQdeltaCT)
 library(tidyverse)
 path <- "data_Ct_long.csv"
 
-# Load the Ct data using the RQdeltaCT function
+# load the Ct data
 data.Ct <- read_Ct_long(path = path,
                         sep = ",",           # CSV separator
                         dec = ".",           # Decimal character
@@ -35,7 +34,7 @@ data.Ct <- read_Ct_long(path = path,
                         column.Group = 1,    # Column index for Group information
                         column.Flag = 5)     # Column index for Flag information
 
-# Check the structure of the loaded data
+
 str(data.Ct)
 ```
 {: .nolineno}
@@ -47,13 +46,12 @@ str(data.Ct)
 Before diving into quantification, it's crucial to perform some quality control on the Ct values. The RQdeltaCT package provides functions to quickly visualise the raw Ct values, which can help spot outliers or issues. I generated barplots for Ct values per sample and per gene. These also save as TIFF files if `save.to.tiff = TRUE`.
 
 ```r
-# Barplot of Ct values per sample
 sample.Ct.control <- control_Ct_barplot_sample(data = data.Ct,
                                              flag.Ct = "Undetermined", # How undetermined values are flagged
                                              maxCt = 38,               # Max Ct value considered reliable
                                              save.to.tiff = TRUE)
 
-# Barplot of Ct values per gene
+
 gene.Ct.control <- control_Ct_barplot_gene(data = data.Ct,
                                            flag.Ct = "Undetermined",
                                            maxCt = 38,
@@ -92,12 +90,12 @@ control_heatmap(data.Ct,
 Next, I looked for samples or genes with a high fraction of unreliable Ct values.
 
 ```r
-# Finding samples with >50% unreliable Ct values
+# finding samples with >50% unreliable Ct values
 low.quality.samples <- filter(sample.Ct.control[[2]], Not.reliable.fraction > 0.5)$Sample
 low.quality.samples <- as.vector(low.quality.samples)
 print(paste("Low quality samples to remove:", low.quality.samples))
 
-# Finding genes with >50% unreliable Ct values in any given group
+# finding genes with >50% unreliable Ct values in any given group
 low.quality.genes <- filter(gene.Ct.control[[2]], Not.reliable.fraction > 0.5)$Gene
 low.quality.genes <- unique(as.vector(low.quality.genes))
 print(paste("Low quality genes to remove:", low.quality.genes))
@@ -110,11 +108,11 @@ We then explored filtering the data using `filter_Ct` primarily to handle values
 
 ```r
 data.CtF <- filter_Ct(data = data.Ct,
-                      flag.Ct = "Undetermined", # String indicating undetermined Ct
-                      maxCt = 38.5,               # Ct values above this are considered unreliable
-                      flag = c("Undetermined"), # Other flags to consider unreliable
-                      remove.Gene = low.quality.genes, # From previous step (was empty)
-                      remove.Sample = low.quality.samples) # From previous step (was empty)
+                      flag.Ct = "Undetermined",
+                      maxCt = 38.5,
+                      flag = c("Undetermined"),
+                      remove.Gene = low.quality.genes,
+                      remove.Sample = low.quality.samples)
 
 dim(data.Ct)
 dim(data.CtF)
@@ -136,7 +134,7 @@ data.Ct.ready <- make_Ct_ready(data = data.CtF,
 A stable reference (housekeeping) gene is essential for normalisation. We used the ctrlGene package to help identify the best one from our candidates (*ACTB1*, *GUSB2*).
 
 ```r
-library(ctrlGene) # For finding reference genes
+library(ctrlGene)
 ref_gene_analysis <- find_ref_gene(data = data.CtF.ready, 
                                    groups = c("Osteoarthritis","Control"),
                                    candidates = c("ACTB1", "GUSB2"),
@@ -161,13 +159,13 @@ data.dCt <- delta_Ct(data = data.CtF.ready,
 I then generated more QC plots using the normalised ddCt data - **Boxplots**, to visualise the distribution of ΔCt values per sample and per gene, grouped by condition (control vs osteoarhtritis), **Cluster Analysis**, to see how samples and genes group based on their ΔCt profiles, and **PCA Plots**, to visualise sample relationships in reduced dimensionality. The small data set didn't let us get much information out of these plots, however.
 
 ```r
-# Example: Boxplot of dCt values by gene, grouped by condition
+# boxplot of dCt values by gene, grouped by condition
 control_boxplot_gene(data = data.dCt,
                      by.group = TRUE,
                      y.axis.title = "dCt",
                      save.to.tiff = TRUE)
 
-# Example: PCA plot for samples based on dCt values
+# PCA plot for samples based on dCt values
 control_pca_sample(data = data.dCt, # Using dCt data for PCA
                    point.size = 3,
                    legend.position = "top",
@@ -194,7 +192,7 @@ control_pca_sample(data = data.dCt, # Using dCt data for PCA
 Finally, I performed the relative quantification using the ddCt method to compare gene expression in osteoarthritis samples versus the control group average.
 
 ```r
-library(coin) # For statistical tests used within RQ_ddCt by RQdeltaCT
+library(coin) # statistical tests used within RQ_ddCt
 
 results.ddCt <- RQ_ddCt(data = data.dCt,
                         group.study = "Osteoarthritis",
@@ -207,7 +205,7 @@ results.ddCt <- RQ_ddCt(data = data.dCt,
 And then comes the results visualisation, starting with the **Fold change plot (`FCh_plot`)**. This shows the fold changes for each gene, often with statistical significance indicated. I used p < 0.05 and Fold Change > 2 as thresholds for notable changes, following the instructions found on the CRAN website.
 
 ```r
-# Define significance labels for plots
+# defines significance labels for plots
 signif.labels <- c("****", "***", "**", "ns.", " ns. ", "  ns.")
 
 FCh.plot <- FCh_plot(data = results.ddCt,
@@ -223,7 +221,7 @@ FCh.plot <- FCh_plot(data = results.ddCt,
 I used **Boxplots (`results_boxplot`)** for the genes found to have higher significance (*JUN_5*, *DUSP1_6*, *NFKBIA7*) in the Fch plot, in order to visualise their expression levels and significance between groups. I made both faceted and non-faceted versions but chose the faceted one in the end.
 
 ```r
-# Example for a faceted boxplot for the selected genes
+# faceted boxplot for the selected genes
 final_boxplot <- results_boxplot(data = data.dCt,
                                  sel.Gene = c("JUN_5", "DUSP1_6", "NFKBIA7"),
                                  by.group = TRUE,
@@ -245,9 +243,7 @@ final_boxplot <- results_boxplot(data = data.dCt,
 The **heatmap (`results_heatmap`)** provides an overview of expression patterns across all genes and samples using the normalised ΔCt data, with custom colors for groups and expression levels.
 
 ```r
-# Define custom colors for groups and heatmap gradient
 colors.for.groups = list("Group" = c("Osteoarthritis"="firebrick1","Control"="green3"))
-# Ensure the colors_gradient is appropriate for your data range
 colors_gradient <- c("navy","navy","#313695","#4575B4","#74ADD1","#ABD9E9",
                        "#E0F3F8","#FFFFBF","#FEE090","#FDAE61","#F46D43",
                        "#D73027","#C32B23","#A50026","#8B0000") 
@@ -266,7 +262,7 @@ results_heatmap <- results_heatmap(data.dCt,
 Last but not least, **single gene-pair scatter plots** (`single_pair_gene`, `single_pair_sample`) and other sample and gene correlation plots (`corr_sample`, `corr_gene`) used for the analysis and visualisation of relationships between pair of samples and genes.
 
 ```r
-#example of single pair sample scatter plot comparing a osteoarthritis sample against a control sample
+# example of single pair sample scatter plot comparing a osteoarthritis sample against a control sample
 OA1_Control18 <- single_pair_sample(data = data.dCt,
                                      x = "OA 1",
                                      y = "Control 18",
