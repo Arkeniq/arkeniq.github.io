@@ -15,8 +15,6 @@ After graduating, I looked for a specialty that was close to research and techno
 
 Working in one of the largest **molecular pathology** labs at the **Bucharest University Emergency Hospital**, I was right where the data is generated, and when I saw how much information is hidden in sequencing results, my old passion for informatics came back stronger than ever.
 
-Now, I feel ready for the next step - I am starting a Master's in Applied Bioinformatics for Life Sciences to finally bring my two interests together.
-
 This blog is my practical notebook for that process. I write about the bioinformatic workflows and tools I get to try out and different other projects I get myself into, explaining them in very simple terms. It’s for me to organize my thoughts, and for anyone else who finds it useful.
 
 Thank you for reading. I hope you enjoy following along.
